@@ -4,10 +4,23 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from methods import parse_site
 
+from config import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS
+from database import db
+from models import User
+
 # Flask constructor takes the name of 
 # current module (__name__) as argument.
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = SQLALCHEMY_TRACK_MODIFICATIONS
+
 CORS(app, resources={r"/*": {"origins": "*"}})
+
+db.init_app(app)
+
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 # The route() function of the Flask class is a decorator, 
 # which tells the application which URL should call 
