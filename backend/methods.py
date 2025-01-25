@@ -91,9 +91,9 @@ def parse_site(link):
         classes[class_name]["days"].append(day)
 
     # Print the resulting classes dictionary
-    return classes
-
     print("Schedule data saved to schedule.json")
+
+    return classes
 
 def main():
     """Main function to execute the script."""
@@ -101,7 +101,7 @@ def main():
     parser.add_argument("-l", "--link", required=True, help="The URL of the schedule to parse.")
     args = parser.parse_args()
 
-    parse_site(args.link)
+    print(parse_site(args.link))
 
 if __name__ == "__main__":
     main()
