@@ -18,8 +18,8 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 db.init_app(app)
 
-@app.before_first_request
-def create_tables():
+with app.app_context():
+    # create data tables when the app starts
     db.create_all()
 
 # The route() function of the Flask class is a decorator, 
