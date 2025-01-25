@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import re
 import argparse
+import json
 
 # URL to scrape
 from selenium import webdriver
@@ -90,7 +91,10 @@ def parse_site(link):
         classes[class_name]["days"].append(day)
 
     # Print the resulting classes dictionary
-    print(classes)
+    with open("schedule.json", "w", encoding="utf-8") as json_file:
+        json.dump(classes, json_file, indent=4)
+
+    print("Schedule data saved to schedule.json")
 
 def main():
     """Main function to execute the script."""
