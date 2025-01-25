@@ -8,6 +8,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+
 
 # Helper functions
 def calculate_day(left_percentage):
@@ -25,7 +27,9 @@ def extract_style_value(style, key):
 
 # Set up WebDriver
 def parse_site(link):
-    driver = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    driver = webdriver.Chrome(options=chrome_options)
     driver.get(link)
 
     # Wait for the `time_block` elements to load (adjust timeout as needed)
