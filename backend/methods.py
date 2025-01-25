@@ -30,10 +30,10 @@ def parse_site(link):
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     driver = webdriver.Chrome(options=chrome_options)
-    driver.get(link)
 
     # Wait for the `time_block` elements to load (adjust timeout as needed)
     try:
+        driver.get(link)
         WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.CLASS_NAME, "time_block"))
         )
@@ -42,7 +42,7 @@ def parse_site(link):
         print("Failed to load time blocks:", e)
     finally:
         driver.quit()
-    driver.quit()
+
 
     # Parse HTML with BeautifulSoup
     soup = BeautifulSoup(html, "html.parser")
