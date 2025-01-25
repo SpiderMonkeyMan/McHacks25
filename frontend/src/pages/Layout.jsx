@@ -4,7 +4,16 @@ import { Outlet, NavLink } from 'react-router-dom';
 const Layout = () => {
     return (
         <div>
-            <h1>HEADER AND MORE</h1>
+            <header>
+                <div>
+                    <NavLink to='/'>
+                        MSS
+                    </NavLink>
+                    <NavLink to='/schedule'>
+                        Schedule
+                    </NavLink>
+                </div>
+            </header>
             <Outlet />
         </div>
     );
