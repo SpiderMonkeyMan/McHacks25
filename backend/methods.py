@@ -91,8 +91,7 @@ def parse_site(link):
         classes[class_name]["days"].append(day)
 
     # Print the resulting classes dictionary
-    with open("schedule.json", "w", encoding="utf-8") as json_file:
-        json.dump(classes, json_file, indent=4)
+    return classes
 
     print("Schedule data saved to schedule.json")
 
