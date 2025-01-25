@@ -38,15 +38,11 @@ def parse_site(link):
             EC.presence_of_all_elements_located((By.CLASS_NAME, "time_block"))
         )
         html = driver.page_source
-        print("Time blocks loaded!")
     except Exception as e:
         print("Failed to load time blocks:", e)
     finally:
         driver.quit()
     driver.quit()
-
-    with open("response.html", "w", encoding="utf-8") as file:
-        file.write(html)
 
     # Parse HTML with BeautifulSoup
     soup = BeautifulSoup(html, "html.parser")
@@ -57,8 +53,6 @@ def parse_site(link):
         toptime = int(hour_marker_tag.text.strip())
     else:
         print("hour_marker not found.")
-
-    print("toptime:", toptime)
 
     # Initialize the classes dictionary
     classes = {}
@@ -94,18 +88,10 @@ def parse_site(link):
         # Append the day to the list of days
         classes[class_name]["days"].append(day)
 
-    # Print the resulting classes dictionary
-    print("Schedule data saved to schedule.json")
-
     return classes
 
 def main():
-    """Main function to execute the script."""
-    parser = argparse.ArgumentParser(description="Parse a schedule from a given URL.")
-    parser.add_argument("-l", "--link", required=True, help="The URL of the schedule to parse.")
-    args = parser.parse_args()
-
-    print(parse_site(args.link))
+    print(parse_site("https://vsb.mcgill.ca/vsb/criteria.jsp?access=0&lang=en&tip=1&page=results&scratch=0&term=202501&sort=none&filters=iiiiiiiii&bbs=&ds=&cams=Distance_Downtown_Macdonald_Off-Campus&locs=any&isrts=&course_0_0=COMP-303&sa_0_0=&cs_0_0=--202501_1801--&cpn_0_0=&csn_0_0=&ca_0_0=&dropdown_0_0=al&ig_0_0=0&rq_0_0=&course_1_0=COMP-551&sa_1_0=&cs_1_0=--202501_1822--&cpn_1_0=&csn_1_0=&ca_1_0=&dropdown_1_0=al&ig_1_0=0&rq_1_0=&course_2_0=MATH-358&sa_2_0=&cs_2_0=--202501_3154--&cpn_2_0=&csn_2_0=&ca_2_0=&dropdown_2_0=al&ig_2_0=0&rq_2_0=&course_3_0=MATH-357&sa_3_0=&cs_3_0=--202501_3153--&cpn_3_0=&csn_3_0=&ca_3_0=&dropdown_3_0=al&ig_3_0=0&rq_3_0=&course_4_0=GEOG-314&sa_4_0=&cs_4_0=--202501_2748-2750-&cpn_4_0=&csn_4_0=&ca_4_0=&dropdown_4_0=al&ig_4_0=0&rq_4_0="))
 
 if __name__ == "__main__":
     main()
