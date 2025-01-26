@@ -56,7 +56,7 @@ const ScheduleInput = ({ onSave }) => {
     );
 };
 
-const SchedulePage = () => {
+const MainContent = () => {
     const { username } = useContext(LoginContext);
     const [schedule, setSchedule] = useState(null);
 
@@ -103,4 +103,4 @@ const SchedulePage = () => {
     );    
 };
 
-export default SchedulePage;
+export default MainContent;
