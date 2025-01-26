@@ -4,7 +4,7 @@ import Friendbar from './Friendbar';
 
 const SchedulePage = ({schedule, friendCourses }) => {
     return (
-        <div class='flex h-screen'>
+        <div class='flex'>
             <div class='p-5'>
                 <Friendbar friendCourses={friendCourses} />
             </div>
