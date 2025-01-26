@@ -113,7 +113,7 @@ def add_schedule_to_user(username, schedule_data):
         new_course = Course(
             name=course_name,
             schedule_id=new_schedule.id,
-            start_time=course_details['starttime'],
+            start_time=course_details['start_time'],
             length=course_details['length'],
         )
         new_course.days_list = course_details['days']  # Assuming days_list property is implemented

@@ -83,7 +83,7 @@ def parse_site(link):
 
         # Add data to classes dictionary
         if class_name not in classes:
-            classes[class_name] = {"days": [], "starttime": starttime, "length": length}
+            classes[class_name] = {"days": [], "start_time": starttime, "length": length}
 
         # Append the day to the list of days
         classes[class_name]["days"].append(day)
