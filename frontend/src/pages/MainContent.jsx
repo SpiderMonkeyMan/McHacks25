@@ -81,6 +81,15 @@ const MainContent = () => {
             console.error("Error fetching user data:", error);
         }
     }
+
+    const addFriend = async ({ friend }) => {
+        try {
+            const response = await axios.post("http://127.0.0.1:5000/add-friend", { username, friend });
+            setFriendsCourses([response.data.friend_courses, ...friendCourses])
+        } catch (error) {
+            console.log("Error adding friend:", error)
+        }
+    }
     
     useEffect(() => {
         fetchUserData();
@@ -90,7 +99,7 @@ const MainContent = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             {username ? (
                 schedule ? (
-                    <SchedulePage schedule={schedule} friendCourses={friendCourses} />
+                    <SchedulePage schedule={schedule} friendCourses={friendCourses} addFriend={addFriend} />
                 ) : (
                     <ScheduleInput onSave={setSchedule} />
                 )

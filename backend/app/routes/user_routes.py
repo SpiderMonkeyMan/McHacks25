@@ -127,23 +127,45 @@ def add_schedule_to_user(username, schedule_data):
 @user_routes.route('/add-friend', methods=['POST'])
 def add_friend():
     data = request.get_json()
-    username1 = data.get('username1')  # First user
-    username2 = data.get('username2')  # Second user
+    user = data.get('user')  # First user
+    friend = data.get('friend')  # Second user
 
-    if not username1 or not username2:
+    if not user or not friend:
         return jsonify({"error": "Both usernames are required"}), 400
-    
+
     # Fetch the users from the database
-    user1 = User.query.filter_by(name=username1).first()
-    user2 = User.query.filter_by(name=username2).first()
+    user1 = User.query.filter_by(name=user).first()
+    user2 = User.query.filter_by(name=friend).first()
 
     if not user1 or not user2:
         return jsonify({"error": "One or both users do not exist"}), 404
-    
+
     if user2 in user1.friends:
         return jsonify({"message": "These users are already friends"}), 200
-    
+
+    # Add the friend relationship
     user1.friends.append(user2)
     db.session.commit()
 
-    return jsonify({"message": f"{username1} and {username2} are now friends"}), 201
+    # Fetch friend's schedule and courses
+    friend_schedule = Schedule.query.filter_by(user_id=user2.id).first()
+    friend_schedule_data = None
+    if friend_schedule:
+        friend_courses = friend_schedule.courses
+        friend_schedule_data = {
+            "username": friend,
+            "courses": [
+                {
+                    "name": course.name,
+                    "start_time": course.start_time,
+                    "length": course.length,
+                    "days": course.days_list  # Assuming days_list property is implemented
+                }
+                for course in friend_courses
+            ]
+        }
+
+    return jsonify({
+        "message": f"{user} and {friend} are now friends",
+        "friend_courses": friend_schedule_data
+    }), 201
