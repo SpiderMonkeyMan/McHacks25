@@ -74,8 +74,8 @@ const MainContent = () => {
                 }
             );
             if (response.data.schedule) {
-                setSchedule(response.data.courses);
-                setFriendsCourses(response.data.friendCourses);
+                setSchedule(response.data.user_courses);
+                setFriendsCourses(response.data.friends);
             }
         } catch (error) {
             console.error("Error fetching user data:", error);
@@ -84,25 +84,31 @@ const MainContent = () => {
     
     useEffect(() => {
         fetchUserData();
-    }, [username]);
+    }, []);
 
     return (
-        <div>
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             {username ? (
-                schedule ? <SchedulePage schedule={schedule} friendCourses={friendCourses} /> : <ScheduleInput onSave={setSchedule} />
+                schedule ? (
+                    <SchedulePage schedule={schedule} friendCourses={friendCourses} />
+                ) : (
+                    <ScheduleInput onSave={setSchedule} />
+                )
             ) : (
-                <>
-                    <div>No user data available</div>
-                    <Link 
-                        to="/login" 
-                        className="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+                <div className="text-center bg-white p-6 rounded-lg shadow-md w-80">
+                    <h1 className="text-2xl font-bold mb-4">No User Data</h1>
+                    <p className="text-gray-600 mb-4">You need to log in to access your schedule.</p>
+                    <Link
+                        to="/login"
+                        className="inline-block bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
                     >
                         Log in
                     </Link>
-                </>
+                </div>
             )}
         </div>
-    );    
+    );
+      
 };
 
 export default MainContent;

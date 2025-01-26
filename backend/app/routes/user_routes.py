@@ -17,12 +17,7 @@ def check_username():
     user = User.query.filter_by(name=username).first()
 
     if not user:
-        """# If the user does not exist, add to the database
-        new_user = User(name=username)
-        db.session.add(new_user)
-        db.session.commit()"""
-
-        # Redirect to the page that asks for the link
+        # If the user does not exist, add to the database
         return jsonify({
             "schedule": False
         })
@@ -30,30 +25,53 @@ def check_username():
     # If the user exists, check for an attached schedule
     schedule = Schedule.query.filter_by(user_id=user.id).first()
 
-    if not schedule:
-        # If no schedule is attached, redirect to the link request page
-        return jsonify({
-            "schedule": False
-        })
+    user_schedule_data = None
+    if schedule:
+        # Fetch all courses linked to the schedule
+        courses = schedule.courses
 
-    # Fetch all courses linked to the schedule
-    courses = schedule.courses
+        # Serialize course data
+        user_courses = [
+            {
+                "name": course.name,
+                "start_time": course.start_time,
+                "length": course.length,
+                "days": course.days_list  # Assuming days_list property is implemented in the Course model
+            }
+            for course in courses
+        ]
 
-    # Serialize course data
-    course_data = [
-        {
-            "name": course.name,
-            "start_time": course.start_time,
-            "length": course.length,
-            "days": course.days_list  # Assuming days_list property is implemented in the Course model
-        }
-        for course in courses
-    ]
+    # Fetch friends of the user
+    friends = user.friends
+
+    # Fetch schedules and courses for each friend
+    friends_data = []
+    for friend in friends:
+        friend_schedule = Schedule.query.filter_by(user_id=friend.id).first()
+        if friend_schedule:
+            friend_courses = friend_schedule.courses
+            friends_data.append({
+                "username": friend.name,
+                "courses": [
+                    {
+                        "name": course.name,
+                        "start_time": course.start_time,
+                        "length": course.length,
+                        "days": course.days_list  # Assuming days_list property is implemented in the Course model
+                    }
+                    for course in friend_courses
+                ]
+            })
+        else:
+            friends_data.append({
+                "username": friend.name,
+                "courses": None
+            })
 
     return jsonify({
-        "schedule": True,
-        "schedule_id": schedule.id,
-        "courses": course_data
+        "schedule": bool(schedule),
+        "user_courses": user_courses,
+        "friends": friends_data
     })
 
 
