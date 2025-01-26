@@ -1,3 +1,4 @@
+from flask import json
 from . import db
 
 # Association table for the many-to-many relationship (friendship) between users
@@ -39,6 +40,9 @@ class Course(db.Model):
     __tablename__ = 'courses'
     name = db.Column(db.String, nullable=False)
     schedule_id = db.Column(db.Integer, db.ForeignKey('schedules.id'), nullable=False)
+    start_time = db.Column(db.Float, nullable=False)  # Start time of the course
+    length = db.Column(db.Float, nullable=False)  # Length of the course
+    days = db.Column(db.String, nullable=False)  # Days the course occurs (serialized as JSON)
 
     # Composite primary key
     __table_args__ = (
@@ -47,3 +51,12 @@ class Course(db.Model):
 
     # Relationship with Schedule
     schedule = db.relationship('Schedule', back_populates='courses')
+
+    # Utility to set and get days as a list
+    @property
+    def days_list(self):
+        return json.loads(self.days) if self.days else []
+
+    @days_list.setter
+    def days_list(self, days_list):
+        self.days = json.dumps(days_list)
