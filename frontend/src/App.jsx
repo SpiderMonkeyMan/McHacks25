@@ -5,6 +5,7 @@ import LandingPage from './pages/LandingPage';
 import SchedulePage from './pages/SchedulePage';
 import './App.css';
 import { LoginProvider } from './pages/LoginContext';
+import LoginPage from './pages/LoginPage';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<LandingPage />} />
             <Route path="schedule" element={<SchedulePage />} />
+            <Route path="login" element={<LoginPage />} />
           </Route>
         </Routes>
       </Router>
