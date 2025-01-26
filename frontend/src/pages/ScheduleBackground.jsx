@@ -14,6 +14,7 @@ const ScheduleBackground = ({ schedule }) => {
     name,
     ...details,
   }));
+  console.log(events);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -66,18 +67,21 @@ const ScheduleBackground = ({ schedule }) => {
               {/* Event Blocks */}
               {events
                 .filter((event) => event.days.includes(days[dayIndex]))
-                .map((event, index) => (
-                  <div
-                    key={index}
-                    className="absolute left-0 right-0 mx-auto w-[90%] rounded-lg bg-blue-500 text-white text-xs text-center shadow-md flex items-center justify-center"
-                    style={{
-                      top: `${getGridRowStart(event.starttime) * 12}px`, // Adjust top position
-                      height: `${getGridRowSpan(event.length) * 12}px`, // Adjust height
-                    }}
-                  >
-                    {event.name}
-                  </div>
-                ))}
+                .map((event, index) => {
+                  console.log("Event Starttime:", event.start_time);
+                  return (
+                    <div
+                      key={index}
+                      className="absolute left-0 right-0 mx-auto w-[90%] rounded-lg bg-blue-500 text-white text-xs text-center shadow-md flex items-center justify-center"
+                      style={{
+                        top: `${getGridRowStart(event.start_time) * 12}px`, // Adjust top position
+                        height: `${getGridRowSpan(event.length) * 12}px`, // Adjust height
+                      }}
+                    >
+                      {event.name}
+                    </div>
+                  );
+                })}
             </div>
           ))}
         </div>
