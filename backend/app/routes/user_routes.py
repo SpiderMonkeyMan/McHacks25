@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, redirect
-from ..models import db, User
-from ...methods import parse_site
+from ..models import db, User, Schedule, Course
+from methods import parse_site
 
 # Create the blueprint
 user_routes = Blueprint('user_routes', __name__)
@@ -14,11 +14,11 @@ def check_username():
         return jsonify({"error": "Username is required"}), 400
 
     # Check if the username exists in the database
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(name=username).first()
 
     if not user:
         # If the user does not exist, add to the database
-        new_user = User(username=username)
+        new_user = User(name=username)
         db.session.add(new_user)
         db.session.commit()
 
@@ -51,19 +51,20 @@ def check_username():
     ]
 
     return jsonify({
-        "schedule": True
+        "schedule": True,
         "schedule_id": schedule.id,
         "courses": course_data
     })
 
 
 @user_routes.route('/process-schedule', methods=['POST'])
-def create_schedule();
+def create_schedule():
     data = request.json
     sched = parse_site(data['link'])
     add_schedule_to_user(data['username'], sched)
 
-    return jsonify(sched)
+    return jsonify({"success": True,
+                   "courses": sched})
 
 def add_schedule_to_user(username, schedule_data):
     """
@@ -74,15 +75,15 @@ def add_schedule_to_user(username, schedule_data):
     :return: Success message or error.
     """
     # Find or create the user
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(name=username).first()
     if not user:
-        user = User(username=username)
+        user = User(name=username)
         db.session.add(user)
         db.session.commit()
 
     # Check if the user already has a schedule
     if Schedule.query.filter_by(user_id=user.id).first():
-        return {"error": "User already has a schedule."}, 400
+        return True
 
     # Create a new schedule
     new_schedule = Schedule(user_id=user.id)
@@ -103,4 +104,4 @@ def add_schedule_to_user(username, schedule_data):
     # Commit all changes to the database
     db.session.commit()
 
-    return {"message": "Schedule and courses added successfully."}, 200
+    return True

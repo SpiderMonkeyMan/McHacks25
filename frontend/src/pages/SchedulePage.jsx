@@ -63,7 +63,13 @@ const SchedulePage = () => {
         if (!username) return; // Ensure the username is available before making the request
         try {
             const response = await axios.post(
-                `http://127.0.0.1:5000/check-username?username=${username}`
+                "http://127.0.0.1:5000/check-username", // Update to remove query string
+                { username }, // Send username in the request body
+                {
+                    headers: {
+                        "Content-Type": "application/json", // Ensure the Content-Type is JSON
+                    },
+                }
             );
             if (response.data.schedule) {
                 setSchedule(response.data.courses);
@@ -80,7 +86,7 @@ const SchedulePage = () => {
     return (
         <div>
             {username ? (
-                schedule ? <Schedule /> : <ScheduleInput onSave={setSchedule} />
+                schedule ? (<div>{JSON.stringify(schedule)}</div>) : <ScheduleInput onSave={setSchedule} />
             ) : (
                 <>
                     <div>No user data available</div>
