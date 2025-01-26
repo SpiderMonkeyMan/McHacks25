@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { LoginContext } from './LoginContext';
 
-const Friendbar = ({ friendCourses, addFriend, isPopupOpen, setIsPopupOpen, setSchedule }) => {
+const Friendbar = ({ userSchedule, friendCourses, addFriend, isPopupOpen, setIsPopupOpen, setSchedule }) => {
     const [newFriend, setNewFriend] = useState('');
+    const { username } = useContext(LoginContext);
 
     const handleAddFriend = () => {
         if (newFriend.trim()) {
@@ -19,7 +21,16 @@ const Friendbar = ({ friendCourses, addFriend, isPopupOpen, setIsPopupOpen, setS
                 </h5>
             </div>
             <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-gray-700">
-                {friendCourses.map((friend, index) => (
+                {/* Username Button */}
+                <button
+                    className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onClick={() => setSchedule(userSchedule)}
+                >
+                    {username} (You)
+                </button>
+
+                {/* Friend Buttons */}
+                {(friendCourses || []).map((friend, index) => (
                     <button
                         key={index}
                         className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"

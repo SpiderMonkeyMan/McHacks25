@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import SchedulePage from "./SchedulePage";
 
 
-const ScheduleInput = ({ onSave }) => {
+const ScheduleInput = ({ setSchedule, setUserSchedule }) => {
     const { username } = useContext(LoginContext);
     const [link, setLink] = useState("");
 
@@ -18,7 +18,8 @@ const ScheduleInput = ({ onSave }) => {
                     link: link.trim(),
                 });
                 if (response.data.success) {
-                    onSave(response.data.courses); // Pass the fetched schedule data to the parent
+                    setSchedule(response.data.courses);
+                    setUserSchedule(response.data.courses);
                 } else {
                     alert("Failed to save schedule. Please try again.");
                 }
@@ -59,7 +60,8 @@ const ScheduleInput = ({ onSave }) => {
 const MainContent = () => {
     const { username } = useContext(LoginContext);
     const [schedule, setSchedule] = useState(null);
-    const [friendCourses, setFriendsCourses] = useState(null);
+    const [userSchedule, setUserSchedule] = useState(null);
+    const [friendCourses, setFriendsCourses] = useState([]);
 
     const fetchUserData = async () => {
         if (!username) return; // Ensure the username is available before making the request
@@ -75,6 +77,7 @@ const MainContent = () => {
             );
             if (response.data.schedule) {
                 setSchedule(response.data.user_courses);
+                setUserSchedule(response.data.user_courses)
                 setFriendsCourses(response.data.friends);
             }
         } catch (error) {
@@ -99,9 +102,9 @@ const MainContent = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             {username ? (
                 schedule ? (
-                    <SchedulePage schedule={schedule} setSchedule={setSchedule} friendCourses={friendCourses} addFriend={addFriend} />
+                    <SchedulePage schedule={schedule} userSchedule={userSchedule} setSchedule={setSchedule} friendCourses={friendCourses} addFriend={addFriend} />
                 ) : (
-                    <ScheduleInput onSave={setSchedule} />
+                    <ScheduleInput setSchedule={setSchedule} setUserSchedule={setUserSchedule} />
                 )
             ) : (
                 <div className="text-center bg-white p-6 rounded-lg shadow-md w-80">
