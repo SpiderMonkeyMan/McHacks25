@@ -59,6 +59,7 @@ const ScheduleInput = ({ onSave }) => {
 const MainContent = () => {
     const { username } = useContext(LoginContext);
     const [schedule, setSchedule] = useState(null);
+    const [friendCourses, setFriendsCourses] = useState(null);
 
     const fetchUserData = async () => {
         if (!username) return; // Ensure the username is available before making the request
@@ -74,6 +75,7 @@ const MainContent = () => {
             );
             if (response.data.schedule) {
                 setSchedule(response.data.courses);
+                setFriendsCourses(response.data.friendCourses);
             }
         } catch (error) {
             console.error("Error fetching user data:", error);
@@ -87,7 +89,7 @@ const MainContent = () => {
     return (
         <div>
             {username ? (
-                schedule ? <SchedulePage schedule={schedule}/> : <ScheduleInput onSave={setSchedule} />
+                schedule ? <SchedulePage schedule={schedule} friendCourses={friendCourses} /> : <ScheduleInput onSave={setSchedule} />
             ) : (
                 <>
                     <div>No user data available</div>

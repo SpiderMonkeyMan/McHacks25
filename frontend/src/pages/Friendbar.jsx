@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Friendbar = () => {
+const Friendbar = ({friendCourses}) => {
+    
     return (
         <div
             class="relative flex h-[calc(100vh-20rem)] w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
