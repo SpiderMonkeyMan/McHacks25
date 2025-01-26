@@ -7,4 +7,4 @@ const SchedulePage = () => {
     );
 };
 
-export default Schedule;
+export default SchedulePage;

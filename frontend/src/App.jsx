@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Layout from './pages/Layout';
 import LandingPage from './pages/LandingPage';
-import Schedule from './pages/SchedulePage';
+import SchedulePage from './pages/SchedulePage';
 import './App.css';
 import { LoginProvider } from './pages/LoginContext';
 
