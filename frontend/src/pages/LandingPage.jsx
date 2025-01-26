@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
-import { LoginContext } from "./LoginContext";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
-    const { username, setUsername } = useContext(LoginContext);
-
     return (
         <div className="min-h-screen flex flex-col">
             <header className="bg-blue-600 text-white p-6">
@@ -26,27 +24,12 @@ const LandingPage = () => {
                     </section>
                     <section className="mb-12">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-800">Get Started</h2>
-                        <form className="bg-white shadow-md rounded-lg p-6">
-                            <label 
-                                htmlFor="vsb-link" 
-                                className="block text-gray-700 font-medium mb-2"
-                            >
-                                Enter your VSB link:
-                            </label>
-                            <input 
-                                type="text" 
-                                id="vsb-link" 
-                                name="vsb-link" 
-                                placeholder="Paste your VSB link here"
-                                className="w-full border border-gray-300 rounded-lg p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                            <button 
-                                type="submit" 
-                                className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition duration-300"
-                            >
-                                Submit
-                            </button>
-                        </form>
+                        <Link 
+                            to="/schedule" 
+                            className="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+                        >
+                            Get Started
+                        </Link>
                     </section>
                     <section>
                         <h2 className="text-2xl font-semibold mb-4 text-gray-800">Features</h2>
