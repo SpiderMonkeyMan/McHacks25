@@ -4,7 +4,7 @@ const LandingPage = () => {
     return (
         <div>
             <header>
-                <h1>McGill Schedule Sharer</h1>
+                <h1 className="">McGill Schedule Sharer</h1>
                 <p>
                     Easily share your schedule and see your friends' schedules with the McGill Schedule Sharer app. Simply paste your VSB link and get started!
                 </p>
