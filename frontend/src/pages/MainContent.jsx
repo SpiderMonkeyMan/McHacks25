@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { LoginContext } from "./LoginContext";
 import { Link } from "react-router-dom";
-import ScheduleBackground from "./ScheduleBackground";
+import SchedulePage from "./SchedulePage";
 
 
 const ScheduleInput = ({ onSave }) => {
@@ -87,7 +87,7 @@ const MainContent = () => {
     return (
         <div>
             {username ? (
-                schedule ? <ScheduleBackground /> : <ScheduleInput onSave={setSchedule} />
+                schedule ? <SchedulePage schedule={schedule}/> : <ScheduleInput onSave={setSchedule} />
             ) : (
                 <>
                     <div>No user data available</div>
