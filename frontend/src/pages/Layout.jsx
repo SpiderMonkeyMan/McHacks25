@@ -5,13 +5,6 @@ import { LoginContext } from './LoginContext';
 const Layout = () => {
     const { username, setUsername } = useContext(LoginContext);
 
-    const handleLogout = () => {
-        const confirmed = window.confirm('Are you sure you want to log out?');
-        if (confirmed) {
-            setUsername('');
-        }
-    };
-
     return (
         <div className="min-h-screen flex flex-col">
             <header className="bg-red-900 text-white p-4 shadow-md">
