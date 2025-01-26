@@ -17,10 +17,10 @@ def check_username():
     user = User.query.filter_by(name=username).first()
 
     if not user:
-        # If the user does not exist, add to the database
+        """# If the user does not exist, add to the database
         new_user = User(name=username)
         db.session.add(new_user)
-        db.session.commit()
+        db.session.commit()"""
 
         # Redirect to the page that asks for the link
         return jsonify({
@@ -105,3 +105,27 @@ def add_schedule_to_user(username, schedule_data):
     db.session.commit()
 
     return True
+
+@user_routes.route('/add-friend', methods=['POST'])
+def add_friend():
+    data = request.get_json()
+    username1 = data.get('username1')  # First user
+    username2 = data.get('username2')  # Second user
+
+    if not username1 or not username2:
+        return jsonify({"error": "Both usernames are required"}), 400
+    
+    # Fetch the users from the database
+    user1 = User.query.filter_by(name=username1).first()
+    user2 = User.query.filter_by(name=username2).first()
+
+    if not user1 or not user2:
+        return jsonify({"error": "One or both users do not exist"}), 404
+    
+    if user2 in user1.friends:
+        return jsonify({"message": "These users are already friends"}), 200
+    
+    user1.friends.append(user2)
+    db.session.commit()
+
+    return jsonify({"message": f"{username1} and {username2} are now friends"}), 201
