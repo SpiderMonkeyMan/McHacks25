@@ -6,6 +6,7 @@ import SchedulePage from './pages/SchedulePage';
 import './App.css';
 import { LoginProvider } from './pages/LoginContext';
 import LoginPage from './pages/LoginPage';
+import ScheduleBackground from './pages/ScheduleBackground';
 
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
             <Route index element={<LandingPage />} />
             <Route path="schedule" element={<SchedulePage />} />
             <Route path="login" element={<LoginPage />} />
+            {/* should not have sb page*/}
+            <Route path="sb" element={<ScheduleBackground />} />
           </Route>
         </Routes>
       </Router>
