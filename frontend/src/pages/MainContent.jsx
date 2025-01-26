@@ -82,9 +82,9 @@ const MainContent = () => {
         }
     }
 
-    const addFriend = async ({ friend }) => {
+    const addFriend = async (friend) => {
         try {
-            const response = await axios.post("http://127.0.0.1:5000/add-friend", { username, friend });
+            const response = await axios.post("http://127.0.0.1:5000/add-friend", { user: username, friend: friend });
             setFriendsCourses([response.data.friend_courses, ...friendCourses])
         } catch (error) {
             console.log("Error adding friend:", error)
@@ -99,7 +99,7 @@ const MainContent = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             {username ? (
                 schedule ? (
-                    <SchedulePage schedule={schedule} friendCourses={friendCourses} addFriend={addFriend} />
+                    <SchedulePage schedule={schedule} setSchedule={setSchedule} friendCourses={friendCourses} addFriend={addFriend} />
                 ) : (
                     <ScheduleInput onSave={setSchedule} />
                 )

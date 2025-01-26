@@ -1,16 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ScheduleBackground from './ScheduleBackground';
 import Friendbar from './Friendbar';
 
-const SchedulePage = ({schedule, friendCourses, addFriend }) => {
+const SchedulePage = ({schedule, setSchedule, friendCourses, addFriend }) => {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    
     return (
-        <div class='flex'>
-            <div class='p-5'>
-                <Friendbar friendCourses={friendCourses} addFriend={addFriend} />
+        <div className='flex'>
+            <div className='p-5'>
+                <Friendbar friendCourses={friendCourses} addFriend={addFriend} isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} setSchedule={setSchedule} />
             </div>
-            <div class='p-5'>
+            {!isPopupOpen && (<div className='p-5'>
                 <ScheduleBackground schedule={schedule}/>
-            </div>
+            </div>)}
         </div>
 
     )
