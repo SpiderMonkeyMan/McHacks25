@@ -1,9 +1,7 @@
-import React from "react";
-
 const ScheduleBackground = ({ schedule }) => {
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-  const hours = Array.from({ length: 15 }, (_, i) => `${8 + i}:00`);
-  const halfHours = hours.flatMap((hour, i) => (i < 14 ? [hour, ""] : [hour]));
+  const hours = Array.from({ length: 14 }, (_, i) => `${8 + i}:00`); // Ends at 9 PM
+  const halfHours = hours.flatMap((hour, i) => (i < 14 ? [hour, ""] : [hour])); // Adjusted for 9 PM end
 
   // Helper functions to calculate grid position
   const getGridRowStart = (startTime) => Math.floor((startTime - 8) * 4); // Start row based on time
@@ -52,7 +50,7 @@ const ScheduleBackground = ({ schedule }) => {
           {days.map((day, dayIndex) => (
             <div
               key={dayIndex}
-              className="relative grid grid-rows-[repeat(30,_1fr)] border-l border-gray-300"
+              className="relative grid grid-rows-[repeat(28,_1fr)] border-l border-gray-300"
             >
               {/* Time Slots */}
               {halfHours.map((_, index) => (
