@@ -23,7 +23,7 @@ const Friendbar = ({ userSchedule, friendCourses, addFriend, isPopupOpen, setIsP
             <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-gray-700">
                 {/* Username Button */}
                 <button
-                    className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold text-lg text-gray-900"
                     onClick={() => setSchedule(userSchedule)}
                 >
                     {username} (You)
@@ -33,7 +33,7 @@ const Friendbar = ({ userSchedule, friendCourses, addFriend, isPopupOpen, setIsP
                 {(friendCourses || []).map((friend, index) => (
                     <button
                         key={index}
-                        className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold text-lg text-gray-900"
                         onClick={() => setSchedule(friend.courses)}
                     >
                         {friend.username}
